@@ -14,6 +14,9 @@
 
   include_once('modulos/configuracion/interfazRoles.php');
   include_once('modulos/configuracion/interfazSalones.php');
+  include_once('modulos/configuracion/interfazTipoOperacion.php');
+  include_once('modulos/configuracion/interfazTipoPago.php');
+  include_once('modulos/configuracion/interfazTipoProducto.php');
 
   $xajax->processRequests();
 
@@ -146,14 +149,17 @@
         
         <li class="treeview">
           <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Seguridad</span>
+            <i class="fa fa-dashboard"></i> <span>Mantenimiento</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="javascript: xajax__interfazRolesPrincipal()"><i class="fa fa-caret-right"></i>  Configuracion de Roles</a></li>
-            <li><a href="javascript: xajax__InterfazSalonesPrincipal()"><i class="fa fa-caret-right"></i>  Configuracion de Salones</a></li>
+            <li><a href="javascript: xajax__interfazRolesPrincipal()"><i class="fa fa-caret-right"></i>  Roles</a></li>
+            <li><a href="javascript: xajax__InterfazSalonesPrincipal()"><i class="fa fa-caret-right"></i>  Salones</a>
+            <li><a href="javascript: xajax__InterfazTipoOperacionPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Operacion</a>
+            <li><a href="javascript: xajax__InterfazTipoPagoPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Pago</a>
+            <li><a href="javascript: xajax__InterfazTipoProductoPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Producto</a></li>
         </li>
 
       </ul>

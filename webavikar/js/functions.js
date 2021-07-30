@@ -1,3 +1,22 @@
+
+function obtenerRadioVal() {
+
+    //let valor = document.querySelector('input[name="requiere"]:checked').value
+    var v1 = document.getElementById('rbtn_efectivo');
+    var v2 = document.getElementById('rbtn_numoperacion');
+
+    if (v1.checked){
+        $("#valEfectivo").val(1);
+        $("#valNumOpera").val(0);
+    }
+
+    if (v2.checked){
+        $("#valEfectivo").val(0);
+        $("#valNumOpera").val(1);
+    }   
+}
+
+
 function getElemento(Nombre) {
     return document.getElementById(Nombre);
 }
