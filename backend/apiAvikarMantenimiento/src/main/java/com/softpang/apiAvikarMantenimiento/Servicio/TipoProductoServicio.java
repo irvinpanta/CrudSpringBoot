@@ -19,7 +19,7 @@ public class TipoProductoServicio {
         return (ArrayList<TipoProductoEntity>) tipoProductoRepo.findAll();
     }
 
-    public Optional<TipoProductoEntity> buscarPorId(Long id){
+    public Optional<TipoProductoEntity> buscarPorId(Integer id){
         return tipoProductoRepo.findById(id);
     }
 
@@ -31,11 +31,11 @@ public class TipoProductoServicio {
         tipoProductoRepo.save(tipoProductoEntity);
     }
 
-    public void delete(Long id){
+    public void delete(Integer id){
         tipoProductoRepo.deleteById(id);
     }
 
-    public boolean existsById(Long id){
+    public boolean existsById(Integer id){
         return tipoProductoRepo.existsById(id);
     }
     public boolean existsByDescripcion(String descripcion){

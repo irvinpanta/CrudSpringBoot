@@ -26,7 +26,7 @@ public class TipoProductoControlador {
     }
 
     @GetMapping("/listar/{id}")
-    public ResponseEntity<TipoProductoEntity> buscarPorId(@PathVariable("id") Long id){
+    public ResponseEntity<TipoProductoEntity> buscarPorId(@PathVariable("id") int id){
         if (!tipoProductoServicio.existsById(id))
             return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
         TipoProductoEntity tipoProductoEntity = tipoProductoServicio.buscarPorId(id).get();
@@ -55,7 +55,7 @@ public class TipoProductoControlador {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody TipoProductoModelDto tipoProDto){
+    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody TipoProductoModelDto tipoProDto){
 
         if(!tipoProductoServicio.existsById(id))
             return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
@@ -72,7 +72,7 @@ public class TipoProductoControlador {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id){
+    public ResponseEntity<?> delete(@PathVariable("id") int id){
         if (!tipoProductoServicio.existsById(id))
             return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
         tipoProductoServicio.delete(id);

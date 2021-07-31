@@ -4,12 +4,12 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "tipoproducto")
-public class TipoProductoEntity {
+@Table(name = "cajas")
+public class CajaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer tipoProducto;
+    private Long caja;
 
     @Column(length = 50, unique = true, nullable = false)
     private String descripcion;
@@ -20,20 +20,20 @@ public class TipoProductoEntity {
     @Temporal(TemporalType.DATE)
     private Date fechaSistema;
 
-    public TipoProductoEntity() {
+    public CajaEntity() {
     }
 
-    public TipoProductoEntity(String descripcion, Integer activo) {
+    public CajaEntity(String descripcion, Integer activo) {
         this.descripcion = descripcion;
         this.activo = activo;
     }
 
-    public Integer getTipoProducto() {
-        return tipoProducto;
+    public Long getCaja() {
+        return caja;
     }
 
-    public void setTipoProducto(Integer tipoProducto) {
-        this.tipoProducto = tipoProducto;
+    public void setCaja(Long caja) {
+        this.caja = caja;
     }
 
     public String getDescripcion() {

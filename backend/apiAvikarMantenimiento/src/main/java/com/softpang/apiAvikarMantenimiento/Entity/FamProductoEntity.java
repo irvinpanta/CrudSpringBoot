@@ -1,15 +1,16 @@
 package com.softpang.apiAvikarMantenimiento.Entity;
 
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "tipoproducto")
-public class TipoProductoEntity {
+@Table(name="famproducto")
+public class FamProductoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer tipoProducto;
+    private Integer id;
 
     @Column(length = 50, unique = true, nullable = false)
     private String descripcion;
@@ -20,20 +21,20 @@ public class TipoProductoEntity {
     @Temporal(TemporalType.DATE)
     private Date fechaSistema;
 
-    public TipoProductoEntity() {
+    public FamProductoEntity() {
     }
 
-    public TipoProductoEntity(String descripcion, Integer activo) {
+    public FamProductoEntity(String descripcion, Integer activo) {
         this.descripcion = descripcion;
         this.activo = activo;
     }
 
-    public Integer getTipoProducto() {
-        return tipoProducto;
+    public Integer getId() {
+        return id;
     }
 
-    public void setTipoProducto(Integer tipoProducto) {
-        this.tipoProducto = tipoProducto;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getDescripcion() {
