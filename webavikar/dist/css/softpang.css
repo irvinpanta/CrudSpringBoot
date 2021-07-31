@@ -1,3 +1,8 @@
+.radio, .checkbox {
+    display: inline-block;
+}
+
+
 .CampoObligatorio {
     color: #990000;
     text-align: left;

@@ -17,6 +17,9 @@
   include_once('modulos/configuracion/interfazTipoOperacion.php');
   include_once('modulos/configuracion/interfazTipoPago.php');
   include_once('modulos/configuracion/interfazTipoProducto.php');
+  include_once('modulos/configuracion/interfazCaja.php');
+  include_once('modulos/configuracion/interfazFamProducto.php');
+  include_once('modulos/configuracion/interfazProducto.php');
 
   $xajax->processRequests();
 
@@ -159,7 +162,22 @@
             <li><a href="javascript: xajax__InterfazSalonesPrincipal()"><i class="fa fa-caret-right"></i>  Salones</a>
             <li><a href="javascript: xajax__InterfazTipoOperacionPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Operacion</a>
             <li><a href="javascript: xajax__InterfazTipoPagoPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Pago</a>
+            <li><a href="javascript: xajax__InterfazCajaPrincipal()"><i class="fa fa-caret-right"></i>  Caja</a></li>
+          </ul>  
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Productos</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="javascript: xajax__InterfazProductoPrincipal()"><i class="fa fa-caret-right"></i>  Producto</a></li>
+            <li><a href="javascript: xajax__InterfazFamProductoPrincipal()"><i class="fa fa-caret-right"></i>  Fam. Producto</a></li>
             <li><a href="javascript: xajax__InterfazTipoProductoPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Producto</a></li>
+          </ul>  
         </li>
 
       </ul>

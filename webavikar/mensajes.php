@@ -12,6 +12,9 @@ define('MSG_0005', 'El registro ya existe.');
 define('MSG_1033', '');
 define('MSG_0006', 'Registro no existe');
 
+define('MSG_P001', 'El Stock no puede ser menor o igual a 0');
+define('MSG_P002', 'El Precio no puede ser una cantidad negativa');
+
 
 
 ?>
