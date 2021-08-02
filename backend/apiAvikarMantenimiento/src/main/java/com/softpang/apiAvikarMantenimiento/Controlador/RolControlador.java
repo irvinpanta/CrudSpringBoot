@@ -69,10 +69,16 @@ public class RolControlador {
 
     @DeleteMapping("/delete/{rol}")
     public ResponseEntity<?> delete(@PathVariable("rol") Long rol){
+
+        try {
             if (!rolServicio.existePorId(rol))
                 return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
             rolServicio.delete(rol);
             return new ResponseEntity("MSG_0003", HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity("MSG_0030", HttpStatus.CONFLICT);
+        }
+
     }
 
 

@@ -66,10 +66,15 @@ public class CajaControlador {
 
     @DeleteMapping("/delete/{caja}")
     public ResponseEntity<?> delete(@PathVariable("caja") Long caja){
-        if(!cajaServ.existsById(caja))
-            return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
-        cajaServ.delete(caja);
-        return new ResponseEntity("MSG_0003", HttpStatus.OK);
+        try {
+            if(!cajaServ.existsById(caja))
+                return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
+            cajaServ.delete(caja);
+            return new ResponseEntity("MSG_0003", HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity("MSG_0030", HttpStatus.CONFLICT);
+        }
+
     }
 
 }

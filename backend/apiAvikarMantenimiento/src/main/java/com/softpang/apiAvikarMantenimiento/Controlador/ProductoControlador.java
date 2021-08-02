@@ -94,9 +94,14 @@ public class ProductoControlador {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")int id){
-        if(!productoServicio.existsById(id))
-            return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
-        productoServicio.delete(id);
-        return new ResponseEntity("MSG_0003", HttpStatus.OK);
+        try {
+            if(!productoServicio.existsById(id))
+                return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
+            productoServicio.delete(id);
+            return new ResponseEntity("MSG_0003", HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity("MSG_0030", HttpStatus.CONFLICT);
+        }
+
     }
 }

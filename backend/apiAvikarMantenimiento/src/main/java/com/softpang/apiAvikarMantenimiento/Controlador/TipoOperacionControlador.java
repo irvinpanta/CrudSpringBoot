@@ -67,11 +67,16 @@ public class TipoOperacionControlador {
 
     @DeleteMapping("/delete/{tipoO}")
     public ResponseEntity<?> delete(@PathVariable("tipoO") Long tipoOpera){
-        if(!tipoOperacionServ.existsById(tipoOpera))
-            return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
+        try {
+            if(!tipoOperacionServ.existsById(tipoOpera))
+                return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
 
-        tipoOperacionServ.delete(tipoOpera);
-        return new ResponseEntity("MSG_0003", HttpStatus.OK);
+            tipoOperacionServ.delete(tipoOpera);
+            return new ResponseEntity("MSG_0003", HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity("MSG_0030", HttpStatus.CONFLICT);
+        }
+
 
     }
 

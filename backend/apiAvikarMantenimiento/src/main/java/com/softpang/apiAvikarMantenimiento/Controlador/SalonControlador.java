@@ -69,10 +69,16 @@ public class SalonControlador {
 
     @DeleteMapping("/delete/{salon}")
     public ResponseEntity<?> delete(@PathVariable("salon") Long salon){
-        if(!salonServicio.existsById(salon))
-            return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
 
-        salonServicio.delete(salon);
-        return new ResponseEntity("MSG_0003", HttpStatus.OK);
+        try {
+            if(!salonServicio.existsById(salon))
+                return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
+
+            salonServicio.delete(salon);
+            return new ResponseEntity("MSG_0003", HttpStatus.OK);
+        }catch (Exception ex){
+            return new ResponseEntity("MSG_0030", HttpStatus.CONFLICT);
+        }
+
     }
 }
