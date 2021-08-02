@@ -17,4 +17,7 @@
 	define('APP_DIR_CLASS', 'class/');
 
 
+	define('APP_URL_API', 'http://localhost:8080');
+
+
 ?>

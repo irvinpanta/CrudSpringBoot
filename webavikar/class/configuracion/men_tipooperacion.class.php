@@ -1,6 +1,7 @@
 <?php 
 
 	require_once('class/mensaje.class.php');
+	define('API_RUTA_TIPOOPERA', '/api/tipooperacion/');
 
 	class MenTipoO extends mensaje
 	{
@@ -10,9 +11,9 @@
 			$curl = curl_init();
 
 			if ($xFlag == 1){
-				$url = "http://localhost:8080/api/tipooperacion/listar";
+				$url = APP_URL_API . API_RUTA_TIPOOPERA . "listar";
 			}elseif ($xFlag == 2){
-				$url = "http://localhost:8080/api/tipooperacion/listar/{$id}";
+				$url = APP_URL_API . API_RUTA_TIPOOPERA . "listar/{$id}";
 			}
 
 			curl_setopt_array($curl, [
@@ -53,13 +54,13 @@
 			}
 
 			if ($xFlag == "1"){
-				$url = "http://localhost:8080/api/tipooperacion/save";
+				$url = APP_URL_API . API_RUTA_TIPOOPERA . "save";
 				$metodo = "POST";
 			}elseif ($xFlag == "2"){
-				$url = "http://localhost:8080/api/tipooperacion/update/{$xTipoO}";
+				$url = APP_URL_API . API_RUTA_TIPOOPERA . "update/{$xTipoO}";
 				$metodo = "PUT";
 			}elseif ($xFlag == "3"){
-				$url = "http://localhost:8080/api/tipooperacion/delete/{$xTipoO}";
+				$url = APP_URL_API . API_RUTA_TIPOOPERA . "delete/{$xTipoO}";
 				$metodo = "DELETE";
 			}
 

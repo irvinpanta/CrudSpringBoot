@@ -1,6 +1,7 @@
 <?php 
 
 	require_once('class/mensaje.class.php');
+	define('API_RUTA_FAMPRODUCTO', '/api/famproducto/');
 
 	class MenFamPro extends mensaje
 	{
@@ -10,9 +11,9 @@
 			$curl = curl_init();
 
 			if ($xFlag == 1){
-				$url = "http://localhost:8080/api/famproducto/listar";
+				$url = APP_URL_API . API_RUTA_FAMPRODUCTO . "listar";
 			}elseif ($xFlag == 2){
-				$url = "http://localhost:8080/api/famproducto/listar/{$id}";
+				$url = APP_URL_API . API_RUTA_FAMPRODUCTO . "listar/{$id}";
 			}
 
 			curl_setopt_array($curl, [
@@ -53,13 +54,13 @@
 			}
 
 			if ($xFlag == "1"){
-				$url = "http://localhost:8080/api/famproducto/save";
+				$url = APP_URL_API . API_RUTA_FAMPRODUCTO . "save";
 				$metodo = "POST";
 			}elseif ($xFlag == "2"){
-				$url = "http://localhost:8080/api/famproducto/update/{$xId}";
+				$url = APP_URL_API . API_RUTA_FAMPRODUCTO . "update/{$xId}";
 				$metodo = "PUT";
 			}elseif ($xFlag == "3"){
-				$url = "http://localhost:8080/api/famproducto/delete/{$xId}";
+				$url = APP_URL_API . API_RUTA_FAMPRODUCTO . "delete/{$xId}";
 				$metodo = "DELETE";
 			}
 

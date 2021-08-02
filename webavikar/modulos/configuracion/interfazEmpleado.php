@@ -1,13 +1,13 @@
 <?php 
 
-require_once(APP_DIR_CLASS . 'configuracion/men_producto.class.php');
+require_once(APP_DIR_CLASS . 'configuracion/men_empleado.class.php');
 
-class InterfazProducto
+class InterfazEmpleado
 {
     
     function interfazPrincipal(){
 
-        $titulo = 'Configuración de producto';
+        $titulo = 'Configuración de Empleado';
 
         $html = '<ul class="breadcrumb">                            
                     <li>
@@ -45,12 +45,11 @@ class InterfazProducto
                                                 <th style="width: 1%; text-align: center" colspan=""></th>
                                                 <th style="width: 1%; text-align: center" colspan=""></th>
                                                 <th style="width: 1%; text-align: center">Nro.</th>
-                                                <!--<th style="width: 1%; text-align: center">Codigo</th>-->
-                                                <th style="width: 180px; text-align: center">Descripcion</th>
-                                                <th style="width: 30px; text-align: center">Tipo Producto</th>
-                                                <th style="width: 30px; text-align: center">Fam. Producto</th>
-                                                <th style="width: 5px; text-align: center">Stock</th>
-                                                <th style="width: 5px; text-align: center">Precio</th>
+                                                <th style="width: 20px; text-align: center">Doc. Identidad</th>
+                                                <th style="width: 100px; text-align: center">Empleado</th>
+                                                <th style="width: 80px; text-align: center">Direccion</th>
+                                                <th style="width: 20px; text-align: center">Telefono</th>
+                                                <th style="width: 30px; text-align: center">Perfil</th>
                                                 <th style="width: 6%; text-align: center">Estado</th>
                                             </tr>
                                         </thead>
@@ -76,7 +75,7 @@ class InterfazProducto
         $html = '';
         $contador = 0;
 
-        $obj = new MenProducto();
+        $obj = new MenEmpleado();
         $response = $obj->consultar(1);
         $datos = json_decode($response, true);
 
@@ -103,7 +102,7 @@ class InterfazProducto
                     <td style="text-align: center">
                         <a title = "'.MSG_0010.'" href = javascript:void(0) 
                         onclick="
-                            xajax__InterfazProductoFormulario(\''.$value['producto'].'\');
+                            xajax__InterfazEmpleadoFormulario(\''.$value['persona'].'\');
                         "><i class="color-icons icons_editar"></i>
                         </a>                       
                     </td>
@@ -115,7 +114,7 @@ class InterfazProducto
                             Swal.fire({
                               allowOutsideClick: false,
                               title: \''.MSG_0020.'\',
-                              text: \''.$value['descripcion'].'\',
+                              text: \''.$value['numerodocumento'].'\',
                               icon: \'question\',
                               showCancelButton: true,
                               confirmButtonColor: \'#3085d6\',
@@ -123,7 +122,7 @@ class InterfazProducto
                               confirmButtonText: \'Si, Eliminar registro!\'
                               }).then((result) => {
                                   if (result.isConfirmed) {
-                                      xajax__InterfazProductoMantenimiento(\'3\',\''.$value['producto'].'\')
+                                      xajax__InterfazEmpleadoMantenimiento(\'3\',\''.$value['persona'].'\')
                                   }
                             })
 
@@ -132,12 +131,11 @@ class InterfazProducto
                       </a>
                     </td>
                     <td style="text-align: center">' . (++$contador) . '</td> 
-                    <!--<td style="text-align: center">'.$value['producto'].'</td>-->
-                    <td style="text-align: ">'.$value['descripcion'].'</td>
-                    <td style="text-align: ">'.$value['tipoProducto']['descripcion'].'</td>
-                    <td style="text-align: ">'.$value['famproducto']['descripcion'].'</td>
-                    <td style="text-align: center">'.$value['stock'].'</td>
-                    <td style="text-align: center">'.$value['precio'].'</td>
+                    <td style="text-align: center">'.$value['numerodocumento'].'</td>
+                    <td style="text-align: ">'.$value['nombres'].' '.$value['apellidos'].'</td>
+                    <td style="text-align: ">'.$value['direccion'].'</td>
+                    <td style="text-align: center">'.$value['telefono'].'</td>
+                    <td style="text-align: center">'.$value['rol']['descripcion'].'</td>
                     <td style="text-align: center"><span class="'.$color.'">'.$estado.'</span></td>
                 </tr>';
             }
@@ -146,7 +144,7 @@ class InterfazProducto
         return $html;
     }
 
-    function formularioproducto($producto=''){
+    function formulariopersona($persona=''){
 
 
 
@@ -157,83 +155,76 @@ class InterfazProducto
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h4 id="formTitle01">Configuración de producto</h4>
+                        <h4 id="formTitle01">Configuración de Empleado</h4>
                     </div>  
 
                     <div class="modal-body">
-                        <form id="formproducto" name="formproducto" onSubmit="return false" onkeypress="if(gKeyEnter(event)) return false;">
+                        <form id="formpersona" name="formpersona" onSubmit="return false" onkeypress="if(gKeyEnter(event)) return false;">
 
                             <div class="well-login">
         
-                                <input type="hidden" id="id" name="id" value="'.$producto.'">
+                                <input type="hidden" id="id" name="id" value="'.$persona.'">
+
+                            
+                                <div class="form-group" style="margin-left: 12px;">
+                                    <label>Nombres:</label>
+                                    <input type="text" id="txt_nombres" name="txt_nombres" class="form-control" placeholder="Ingrese Nombres"/>
+                                </div>
 
                                 <div class="form-group" style="margin-left: 12px;">
-                                    <label>Descripcion:</label>
-                                    <input type="text" id="txt_descripcion" name="txt_descripcion" class="form-control" placeholder="Descripcion"/>
+                                    <label>Apellidos:</label>
+                                    <input type="text" id="txt_apellidos" name="txt_apellidos" class="form-control" placeholder="Ingrese Apellidos"/>
+                                </div>
+
+                                <div class="form-group" style="margin-left: 12px;">
+                                    <label>Direccion:</label>
+                                    <input type="text" id="txt_direccion" name="txt_direccion" class="form-control" placeholder="Ingrese direccion"/>
+                                </div>
+
+                                <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    <label>Doc. Identidad:</label>
+                                    <input type="text" id="txt_dni" name="txt_dni" class="form-control" placeholder="Ingrese Doc. de Identidad"/>
+                                </div>
+                                </div>
+
+                                <div class="col-xs-12 col-md-6">
+                                <div class="form-group">
+                                    <label>Telefono:</label>
+                                    <input type="text" id="txt_telefono" name="txt_telefono" class="form-control" placeholder="Ingrese Telefono"/>
+                                </div>
                                 </div>
 
                                 <div class="form-group">
 
-                                    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                                        <div class="form-group">
-                                            <label>Stock:</label>
-                                            <input type="text" id="txt_stock" name="txt_stock" class="form-control" placeholder="Stock" />
+                                    <div class="col-xs-12 col-md-8">
+                                    <div class="form-group">
+                                      <label>Rol:</label>
+                                      <select class="form-control" id="lst_rol" name="lst_rol" onchange="">';
+
+                            $obj = new MenRol();
+                            $response = $obj->consultarRol(1);
+                            $datos = json_decode($response, true);
+
+                            foreach($datos as $key => $value){
+
+                                $html .='<option value="'.$value['rol'].'">'.$value['descripcion'].'</option>';
+                            }
+                                                
+
+                            $html .=      '</select>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                                        <div class="form-group">
-                                            <label>Precio:</label>
-                                            <input type="text" id="txt_precio" name="txt_precio" class="form-control" placeholder="Precio" />
-                                        </div>
-                                    </div>
+
                                 </div>
 
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                      <label>Tipo de Producto:</label>
-                                      <select class="form-control" id="lst_tipoproducto" name="lst_tipoproducto" onchange="">';
-
-                        $obj = new MenTipoProducto();
-                        $response = $obj->consultar(1);
-                        $datos = json_decode($response, true);
-
-                        foreach($datos as $key => $value){
-
-                            $html .='<option value="'.$value['tipoProducto'].'">'.$value['descripcion'].'</option>';
-                        }
-                                            
-
-                        $html .=      '</select>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                      <label>Fam. Producto:</label>
-                                      <select class="form-control" id="lst_famproducto" name="lst_famproducto" onchange="">';
-                        
-                        $obj = new MenFamPro();
-                        $response = $obj->consultar(1);
-                        $datos = json_decode($response, true);
-
-                        foreach($datos as $key => $value){
-
-                            $html .='<option value="'.$value['id'].'">'.$value['descripcion'].'</option>';
-                        }
-
-                        $html .=      '</select>
-                                    </div>
-                                </div>
-
-                                
 
                                 <div class="form-group">
                                     <label class="checkbox" style="margin-left: 40px;">
                                         <input type="checkbox" id="chk_activo" name="chk_activo" value="1" checked /> Activo.
                                     </label>
                                 </div>
-
                                 
                             </div>
 
@@ -262,11 +253,11 @@ class InterfazProducto
 }
 
 
-function _InterfazProductoPrincipal() {
+function _InterfazEmpleadoPrincipal() {
 
     $rpta = new xajaxResponse('UTF-8');
 
-    $objIn = new InterfazProducto();
+    $objIn = new InterfazEmpleado();
     $html = $objIn->interfazPrincipal();
 
     $rpta->addScript('
@@ -278,18 +269,18 @@ function _InterfazProductoPrincipal() {
     $rpta->addAssign("container-fluid", "innerHTML", $html);
     $rpta->addScript("
         $('#btnNuevo').unbind('click').click(function(){
-            xajax__InterfazProductoFormulario();
+            xajax__InterfazEmpleadoFormulario();
         });
     ");
 
     return $rpta;
 }
 
-function _InterfazProductoListado() {
+function _InterfazEmpleadoListado() {
     
     $rpta = new xajaxResponse('UTF-8');
 
-    $objIn = new InterfazProducto();
+    $objIn = new InterfazEmpleado();
     $rptaHtml = $objIn->interfazListado();
 
     $rpta->addAssign("td_listado", "innerHTML", $rptaHtml);
@@ -297,37 +288,38 @@ function _InterfazProductoListado() {
     return $rpta;
 }
 
-function _InterfazProductoFormulario($producto = ''){
+function _InterfazEmpleadoFormulario($persona = ''){
 
     $rpta = new xajaxResponse('UTF-8');
 
-    $objIn = new InterfazProducto();
-    $rpta->addAssign("ajaxFormulario", "innerHTML", $objIn->formularioproducto($producto));
+    $objIn = new InterfazEmpleado();
+    $rpta->addAssign("ajaxFormulario", "innerHTML", $objIn->formulariopersona($persona));
     
-    $obj = new MenProducto();
-    $response = $obj->consultar(2, $producto);
+    $obj = new MenEmpleado();
+    $response = $obj->consultar(2, $persona);
     $resultado = json_decode($response, true);
 
 
     if ($response !== "MSG_0006"){
     
-        if ($producto == ""){
+        if ($persona == ""){
 
-            $rpta->addAssign("formTitle01",'innerHTML',"Nuevo producto");
+            $rpta->addAssign("formTitle01",'innerHTML',"Nuevo persona");
             $rpta->addAssign("btnGrabar",'innerHTML',"Guardar");
 
         }else{
 
-            $rpta->addAssign("formTitle01",'innerHTML',"Editar producto");
+            $rpta->addAssign("formTitle01",'innerHTML',"Editar persona");
             $rpta->addAssign("btnGrabar",'innerHTML',"Actualizar");
 
        
-            $rpta->addAssign("txt_descripcion","value",$resultado["descripcion"]);
-            $rpta->addAssign("txt_stock","value",$resultado["stock"]);
-            $rpta->addAssign("txt_precio","value",$resultado["precio"]);
+            $rpta->addAssign("txt_dni","value",$resultado["numerodocumento"]);
+            $rpta->addAssign("txt_nombres","value",$resultado["nombres"]);
+            $rpta->addAssign("txt_apellidos","value",$resultado["apellidos"]);
+            $rpta->addAssign("txt_direccion","value",$resultado["direccion"]);
+            $rpta->addAssign("txt_telefono","value",$resultado["telefono"]);
 
-            $rpta->addAssign("lst_tipoproducto","value",$resultado['tipoProducto']["tipoProducto"]);
-            $rpta->addAssign("lst_famproducto","value",$resultado['famproducto']["id"]);
+            $rpta->addAssign("lst_rol","value",$resultado['rol']["rol"]);
 
             if ($resultado["activo"] == 1) {
                 
@@ -348,30 +340,34 @@ function _InterfazProductoFormulario($producto = ''){
         
             $('#btnGrabar').unbind('click').click(function(){
                 validaERP.valida({
-                    form: '#formproducto',
+                    form: '#formpersona',
                     items: {
-                        txt_descripcion: {
-                            required: true
-                        },
-                        txt_stock: {
+                        txt_dni: {
                             required: true,
+                            minlength: 8,
+                            maxlength: 11,
                             number: true
                         },
-                        txt_precio: {
+                        txt_nombres: {
                             required: true,
+                            minlength: 3
+                        },
+                        txt_apellidos: {
+                            required: true
+                        },
+                        txt_direccion: {
+                            required: true
+                        },
+                        lst_rol:{
+                            required: true
+                        },
+                        txt_telefono: {
                             number: true
-                        },
-                        lst_famproducto:{
-                            required: true
-                        },
-                        lst_tipoproducto:{
-                            required: true
                         }
-
                     },
                     success: function() {
                         var xFlag = $('#btnGrabar').html() == 'Guardar' ? '1' : '2';
-                        xajax__InterfazProductoMantenimiento(xFlag, xajax.getFormValues('formproducto', true));
+                        xajax__InterfazEmpleadoMantenimiento(xFlag, xajax.getFormValues('formpersona', true));
                     }
                 });
             });
@@ -381,17 +377,17 @@ function _InterfazProductoFormulario($producto = ''){
         ");
 
     }else{
-        $rpta->addAlert("producto no existe");
+        $rpta->addAlert("persona no existe");
     }
 
     return $rpta;
 }
 
-function _InterfazProductoMantenimiento($xFlag, $xForm){
+function _InterfazEmpleadoMantenimiento($xFlag, $xForm){
 
     $rpta = new xajaxResponse();
 
-    $objR = new MenProducto();
+    $objR = new MenEmpleado();
     $resul = $objR->mantenimientoData($xFlag, $xForm);
 
     if($resul == "0"){
@@ -400,7 +396,7 @@ function _InterfazProductoMantenimiento($xFlag, $xForm){
 
         $rpta->addAlert(constant($resul));
         $rpta->addScript("
-            xajax__InterfazProductoListado();
+            xajax__InterfazEmpleadoListado();
                 $('#modal-default').modal('hide');
        ");
 
@@ -410,9 +406,9 @@ function _InterfazProductoMantenimiento($xFlag, $xForm){
 }
 
 
-$xajax->registerFunction("_InterfazProductoPrincipal");
-$xajax->registerFunction("_InterfazProductoListado");
-$xajax->registerFunction("_InterfazProductoFormulario");
-$xajax->registerFunction("_InterfazProductoMantenimiento");
+$xajax->registerFunction("_InterfazEmpleadoPrincipal");
+$xajax->registerFunction("_InterfazEmpleadoListado");
+$xajax->registerFunction("_InterfazEmpleadoFormulario");
+$xajax->registerFunction("_InterfazEmpleadoMantenimiento");
 
 ?>

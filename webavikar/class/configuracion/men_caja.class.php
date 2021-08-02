@@ -2,6 +2,8 @@
 
 	require_once('class/mensaje.class.php');
 
+	define('API_RUTA_CAJA', '/api/caja/');
+
 	class MenCaja extends mensaje
 	{
 		
@@ -10,9 +12,9 @@
 			$curl = curl_init();
 
 			if ($xFlag == 1){
-				$url = "http://localhost:8080/api/caja/listar";
+				$url = APP_URL_API . API_RUTA_CAJA . "listar";
 			}elseif ($xFlag == 2){
-				$url = "http://localhost:8080/api/caja/listar/{$id}";
+				$url = APP_URL_API . API_RUTA_CAJA . "listar/{$id}";
 			}
 
 			curl_setopt_array($curl, [
@@ -53,13 +55,13 @@
 			}
 
 			if ($xFlag == "1"){
-				$url = "http://localhost:8080/api/caja/save";
+				$url = APP_URL_API . API_RUTA_CAJA . "save";
 				$metodo = "POST";
 			}elseif ($xFlag == "2"){
-				$url = "http://localhost:8080/api/caja/update/{$xId}";
+				$url = APP_URL_API . API_RUTA_CAJA . "update/{$xId}";
 				$metodo = "PUT";
 			}elseif ($xFlag == "3"){
-				$url = "http://localhost:8080/api/caja/delete/{$xId}";
+				$url = APP_URL_API . API_RUTA_CAJA . "delete/{$xId}";
 				$metodo = "DELETE";
 			}
 

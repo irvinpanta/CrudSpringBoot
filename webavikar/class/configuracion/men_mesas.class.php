@@ -1,9 +1,10 @@
 <?php 
 
 	require_once('class/mensaje.class.php');
-	define('API_RUTA_PRODUCTO', '/api/producto/');
 
-	class MenProducto extends mensaje
+	define('API_RUTA_MESAS', '/api/mesas/');
+
+	class MenMesas extends mensaje
 	{
 		
 		function consultar($xFlag, $id = '') {
@@ -11,9 +12,9 @@
 			$curl = curl_init();
 
 			if ($xFlag == 1){
-				$url = APP_URL_API . API_RUTA_PRODUCTO . "listar";
+				$url = APP_URL_API . API_RUTA_MESAS . "listar";
 			}elseif ($xFlag == 2){
-				$url = APP_URL_API . API_RUTA_PRODUCTO . "listar/{$id}";
+				$url = APP_URL_API. API_RUTA_MESAS . "listar/{$id}";
 			}
 
 			curl_setopt_array($curl, [
@@ -41,21 +42,19 @@
 
 			$xId = "";
 			$xDescripcion = "";
-			$xStock = 0;
-			$xPrecio = 0;
+			$xCantidad = 0;
+			$xMesaRapida = 0;
 			$xActivo = 0;
 
-			$xTipoPro = 0;
-			$xFamPro = 0;
+			$xSalon = 0;
 
 			if ($xFlag == "1" || $xFlag == "2") {
 
 				$xId = $xForm["id"];
 				$xDescripcion = $xForm["txt_descripcion"];
-				$xStock = $xForm["txt_stock"];
-				$xPrecio = $xForm["txt_precio"];
-				$xTipoPro = $xForm["lst_tipoproducto"];
-				$xFamPro = $xForm["lst_famproducto"];
+				$xCantidad = $xForm["txt_cantidad"];
+				$xMesaRapida = isset($xForm["chk_mesarapida"]) ? 1: 0;
+				$xSalon = $xForm["lst_salon"];
 				$xActivo = isset($xForm["chk_activo"]) ? 1 : 0;
 
 			}elseif ($xFlag == "3"){
@@ -63,13 +62,13 @@
 			}
 
 			if ($xFlag == "1"){
-				$url = APP_URL_API . API_RUTA_PRODUCTO . "save";
+				$url = APP_URL_API . API_RUTA_MESAS . "save";
 				$metodo = "POST";
 			}elseif ($xFlag == "2"){
-				$url = APP_URL_API . API_RUTA_PRODUCTO . "update/{$xId}";
+				$url = APP_URL_API . API_RUTA_MESAS . "update/{$xId}";
 				$metodo = "PUT";
 			}elseif ($xFlag == "3"){
-				$url = APP_URL_API . API_RUTA_PRODUCTO . "delete/{$xId}";
+				$url = APP_URL_API . API_RUTA_MESAS . "delete/{$xId}";
 				$metodo = "DELETE";
 			}
 
@@ -80,17 +79,14 @@
 			  CURLOPT_URL => $url,
 			  CURLOPT_RETURNTRANSFER => true,
 			  CURLOPT_CUSTOMREQUEST => $metodo,
-			  CURLOPT_POSTFIELDS => "  {
-			  	\n    \"descripcion\": \"{$xDescripcion}\",
-			  	\n    \"stock\": {$xStock},
-			  	\n    \"precio\": {$xPrecio},
-			  	\n    \"activo\": {$xActivo},
-			  	\n    \"famproducto\": {
-			  						\n      \"id\": {$xFamPro}
-			  						\n  },
-			  	\n    \"tipoProducto\": {
-			  						\n      \"tipoProducto\": {$xTipoPro}
-			  						\n  }\n  }",
+			 CURLOPT_POSTFIELDS => "  {
+			 	\n    \"descripcion\": \"{$xDescripcion}\",
+			 	\n    \"cantidad\": {$xCantidad},
+			 	\n    \"mesarapida\": {$xMesaRapida},
+			 	\n    \"activo\": {$xActivo},
+			 	\n    \"salon\": {
+			 					\n      \"salon\": {$xSalon}
+			 					\n    }\n  }",
 			  CURLOPT_HTTPHEADER => [
 			    "Content-Type: application/json"
 			  ],

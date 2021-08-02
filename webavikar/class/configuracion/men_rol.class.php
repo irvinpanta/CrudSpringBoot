@@ -1,6 +1,7 @@
 <?php 
 
 	require_once('class/mensaje.class.php');
+	define('API_RUTA_ROLES', '/api/roles/');
 
 	class MenRol extends mensaje
 	{
@@ -10,9 +11,9 @@
 			$curl = curl_init();
 
 			if ($xFlag == 1){
-				$url = "http://localhost:8080/api/roles/listar";
+				$url = APP_URL_API . API_RUTA_ROLES . "listar";
 			}elseif ($xFlag == 2){
-				$url = "http://localhost:8080/api/roles/listar/{$rol}";
+				$url = APP_URL_API . API_RUTA_ROLES . "listar/{$rol}";
 			}
 
 			curl_setopt_array($curl, [
@@ -53,13 +54,13 @@
 			}
 
 			if ($xFlag == "1"){
-				$url = "http://localhost:8080/api/roles/save";
+				$url = APP_URL_API . API_RUTA_ROLES . "save";
 				$metodo = "POST";
 			}elseif ($xFlag == "2"){
-				$url = "http://localhost:8080/api/roles/update/{$xRol}";
+				$url = APP_URL_API . API_RUTA_ROLES . "update/{$xRol}";
 				$metodo = "PUT";
 			}elseif ($xFlag == "3"){
-				$url = "http://localhost:8080/api/roles/delete/{$xRol}";
+				$url = APP_URL_API . API_RUTA_ROLES . "delete/{$xRol}";
 				$metodo = "DELETE";
 			}
 

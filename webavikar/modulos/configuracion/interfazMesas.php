@@ -1,13 +1,13 @@
 <?php 
 
-require_once(APP_DIR_CLASS . 'configuracion/men_producto.class.php');
+require_once(APP_DIR_CLASS . 'configuracion/men_mesas.class.php');
 
-class InterfazProducto
+class InterfazMesas
 {
     
     function interfazPrincipal(){
 
-        $titulo = 'Configuración de producto';
+        $titulo = 'Configuración de Mesas';
 
         $html = '<ul class="breadcrumb">                            
                     <li>
@@ -47,10 +47,9 @@ class InterfazProducto
                                                 <th style="width: 1%; text-align: center">Nro.</th>
                                                 <!--<th style="width: 1%; text-align: center">Codigo</th>-->
                                                 <th style="width: 180px; text-align: center">Descripcion</th>
-                                                <th style="width: 30px; text-align: center">Tipo Producto</th>
-                                                <th style="width: 30px; text-align: center">Fam. Producto</th>
-                                                <th style="width: 5px; text-align: center">Stock</th>
-                                                <th style="width: 5px; text-align: center">Precio</th>
+                                                <th style="width: 10px; text-align: center">Cantidad</th>
+                                                <th style="width: 30px; text-align: center">Salon</th>
+                                                <th style="width: 5px; text-align: center">Mesa Rapida</th>
                                                 <th style="width: 6%; text-align: center">Estado</th>
                                             </tr>
                                         </thead>
@@ -76,7 +75,7 @@ class InterfazProducto
         $html = '';
         $contador = 0;
 
-        $obj = new MenProducto();
+        $obj = new MenMesas();
         $response = $obj->consultar(1);
         $datos = json_decode($response, true);
 
@@ -94,6 +93,14 @@ class InterfazProducto
                     $color = "label label-warning";
                 }
 
+                if ($value['mesarapida'] == '1'){
+                    $estadoM = "Si";
+                    $colorM = "label label-success";
+                }else{
+                    $estadoM = "No";
+                    $colorM = "label label-warning";
+                }
+
                 
                 $html .= '
 
@@ -103,7 +110,7 @@ class InterfazProducto
                     <td style="text-align: center">
                         <a title = "'.MSG_0010.'" href = javascript:void(0) 
                         onclick="
-                            xajax__InterfazProductoFormulario(\''.$value['producto'].'\');
+                            xajax__InterfazMesasFormulario(\''.$value['mesa'].'\');
                         "><i class="color-icons icons_editar"></i>
                         </a>                       
                     </td>
@@ -123,7 +130,7 @@ class InterfazProducto
                               confirmButtonText: \'Si, Eliminar registro!\'
                               }).then((result) => {
                                   if (result.isConfirmed) {
-                                      xajax__InterfazProductoMantenimiento(\'3\',\''.$value['producto'].'\')
+                                      xajax__InterfazMesasMantenimiento(\'3\',\''.$value['mesa'].'\')
                                   }
                             })
 
@@ -132,12 +139,11 @@ class InterfazProducto
                       </a>
                     </td>
                     <td style="text-align: center">' . (++$contador) . '</td> 
-                    <!--<td style="text-align: center">'.$value['producto'].'</td>-->
+                    <!--<td style="text-align: center">'.$value['mesa'].'</td>-->
                     <td style="text-align: ">'.$value['descripcion'].'</td>
-                    <td style="text-align: ">'.$value['tipoProducto']['descripcion'].'</td>
-                    <td style="text-align: ">'.$value['famproducto']['descripcion'].'</td>
-                    <td style="text-align: center">'.$value['stock'].'</td>
-                    <td style="text-align: center">'.$value['precio'].'</td>
+                    <td style="text-align: center">'.$value['cantidad'].'</td>
+                    <td style="text-align: ">'.$value['salon']['descripcion'].'</td>
+                    <td style="text-align: center"><span class="'.$colorM.'">'.$estadoM.'</span></td>
                     <td style="text-align: center"><span class="'.$color.'">'.$estado.'</span></td>
                 </tr>';
             }
@@ -146,7 +152,7 @@ class InterfazProducto
         return $html;
     }
 
-    function formularioproducto($producto=''){
+    function formulariomesa($mesa=''){
 
 
 
@@ -157,15 +163,15 @@ class InterfazProducto
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h4 id="formTitle01">Configuración de producto</h4>
+                        <h4 id="formTitle01">Configuración de mesa</h4>
                     </div>  
 
                     <div class="modal-body">
-                        <form id="formproducto" name="formproducto" onSubmit="return false" onkeypress="if(gKeyEnter(event)) return false;">
+                        <form id="formmesa" name="formmesa" onSubmit="return false" onkeypress="if(gKeyEnter(event)) return false;">
 
                             <div class="well-login">
         
-                                <input type="hidden" id="id" name="id" value="'.$producto.'">
+                                <input type="hidden" id="id" name="id" value="'.$mesa.'">
 
                                 <div class="form-group" style="margin-left: 12px;">
                                     <label>Descripcion:</label>
@@ -174,63 +180,45 @@ class InterfazProducto
 
                                 <div class="form-group">
 
-                                    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
+                                    <div class="col-md-4 col-xs-12">
                                         <div class="form-group">
-                                            <label>Stock:</label>
-                                            <input type="text" id="txt_stock" name="txt_stock" class="form-control" placeholder="Stock" />
+                                            <label>Cantidad:</label>
+                                            <input type="text" id="txt_cantidad" name="txt_cantidad" class="form-control" placeholder="Cantidad de Personas" />
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6">
-                                        <div class="form-group">
-                                            <label>Precio:</label>
-                                            <input type="text" id="txt_precio" name="txt_precio" class="form-control" placeholder="Precio" />
+                                    <div class="col-xs-12 col-md-8">
+                                    <div class="form-group">
+                                      <label>Salon:</label>
+                                      <select class="form-control" id="lst_salon" name="lst_salon" onchange="">';
+
+                            $obj = new MenSalon();
+                            $response = $obj->consultarSalon(1);
+                            $datos = json_decode($response, true);
+
+                            foreach($datos as $key => $value){
+
+                                $html .='<option value="'.$value['salon'].'">'.$value['descripcion'].'</option>';
+                            }
+                                                
+
+                            $html .=      '</select>
                                         </div>
                                     </div>
+
+
                                 </div>
 
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                      <label>Tipo de Producto:</label>
-                                      <select class="form-control" id="lst_tipoproducto" name="lst_tipoproducto" onchange="">';
-
-                        $obj = new MenTipoProducto();
-                        $response = $obj->consultar(1);
-                        $datos = json_decode($response, true);
-
-                        foreach($datos as $key => $value){
-
-                            $html .='<option value="'.$value['tipoProducto'].'">'.$value['descripcion'].'</option>';
-                        }
-                                            
-
-                        $html .=      '</select>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-12 col-md-6">
-                                    <div class="form-group">
-                                      <label>Fam. Producto:</label>
-                                      <select class="form-control" id="lst_famproducto" name="lst_famproducto" onchange="">';
-                        
-                        $obj = new MenFamPro();
-                        $response = $obj->consultar(1);
-                        $datos = json_decode($response, true);
-
-                        foreach($datos as $key => $value){
-
-                            $html .='<option value="'.$value['id'].'">'.$value['descripcion'].'</option>';
-                        }
-
-                        $html .=      '</select>
-                                    </div>
-                                </div>
-
-                                
 
                                 <div class="form-group">
                                     <label class="checkbox" style="margin-left: 40px;">
                                         <input type="checkbox" id="chk_activo" name="chk_activo" value="1" checked /> Activo.
+                                    </label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="checkbox" style="margin-left: 40px;">
+                                        <input type="checkbox" id="chk_mesarapida" name="chk_mesarapida" value="0"/> Mesa rapida.
                                     </label>
                                 </div>
 
@@ -262,11 +250,11 @@ class InterfazProducto
 }
 
 
-function _InterfazProductoPrincipal() {
+function _InterfazMesasPrincipal() {
 
     $rpta = new xajaxResponse('UTF-8');
 
-    $objIn = new InterfazProducto();
+    $objIn = new InterfazMesas();
     $html = $objIn->interfazPrincipal();
 
     $rpta->addScript('
@@ -278,18 +266,18 @@ function _InterfazProductoPrincipal() {
     $rpta->addAssign("container-fluid", "innerHTML", $html);
     $rpta->addScript("
         $('#btnNuevo').unbind('click').click(function(){
-            xajax__InterfazProductoFormulario();
+            xajax__InterfazMesasFormulario();
         });
     ");
 
     return $rpta;
 }
 
-function _InterfazProductoListado() {
+function _InterfazMesasListado() {
     
     $rpta = new xajaxResponse('UTF-8');
 
-    $objIn = new InterfazProducto();
+    $objIn = new InterfazMesas();
     $rptaHtml = $objIn->interfazListado();
 
     $rpta->addAssign("td_listado", "innerHTML", $rptaHtml);
@@ -297,37 +285,35 @@ function _InterfazProductoListado() {
     return $rpta;
 }
 
-function _InterfazProductoFormulario($producto = ''){
+function _InterfazMesasFormulario($mesa = ''){
 
     $rpta = new xajaxResponse('UTF-8');
 
-    $objIn = new InterfazProducto();
-    $rpta->addAssign("ajaxFormulario", "innerHTML", $objIn->formularioproducto($producto));
+    $objIn = new InterfazMesas();
+    $rpta->addAssign("ajaxFormulario", "innerHTML", $objIn->formulariomesa($mesa));
     
-    $obj = new MenProducto();
-    $response = $obj->consultar(2, $producto);
+    $obj = new MenMesas();
+    $response = $obj->consultar(2, $mesa);
     $resultado = json_decode($response, true);
 
 
     if ($response !== "MSG_0006"){
     
-        if ($producto == ""){
+        if ($mesa == ""){
 
-            $rpta->addAssign("formTitle01",'innerHTML',"Nuevo producto");
+            $rpta->addAssign("formTitle01",'innerHTML',"Nuevo mesa");
             $rpta->addAssign("btnGrabar",'innerHTML',"Guardar");
 
         }else{
 
-            $rpta->addAssign("formTitle01",'innerHTML',"Editar producto");
+            $rpta->addAssign("formTitle01",'innerHTML',"Editar mesa");
             $rpta->addAssign("btnGrabar",'innerHTML',"Actualizar");
 
        
             $rpta->addAssign("txt_descripcion","value",$resultado["descripcion"]);
-            $rpta->addAssign("txt_stock","value",$resultado["stock"]);
-            $rpta->addAssign("txt_precio","value",$resultado["precio"]);
+            $rpta->addAssign("txt_cantidad","value",$resultado["cantidad"]);
 
-            $rpta->addAssign("lst_tipoproducto","value",$resultado['tipoProducto']["tipoProducto"]);
-            $rpta->addAssign("lst_famproducto","value",$resultado['famproducto']["id"]);
+            $rpta->addAssign("lst_salon","value",$resultado['salon']["salon"]);
 
             if ($resultado["activo"] == 1) {
                 
@@ -342,36 +328,41 @@ function _InterfazProductoFormulario($producto = ''){
                 ");
             }
 
+            if ($resultado["mesarapida"] == 1) {
+                
+                $rpta->addScript("
+                    $('#chk_mesarapida').prop('checked',true);
+                ");
+
+            }else{
+
+                $rpta->addScript("
+                    $('#chk_mesarapida').prop('checked',false);
+                ");
+            }
+
         }
 
         $rpta->addScript("
         
             $('#btnGrabar').unbind('click').click(function(){
                 validaERP.valida({
-                    form: '#formproducto',
+                    form: '#formmesa',
                     items: {
                         txt_descripcion: {
                             required: true
                         },
-                        txt_stock: {
-                            required: true,
-                            number: true
-                        },
-                        txt_precio: {
-                            required: true,
-                            number: true
-                        },
-                        lst_famproducto:{
+                        lst_salon:{
                             required: true
                         },
-                        lst_tipoproducto:{
-                            required: true
+                        txt_cantidad: {
+                            required: true,
+                            number: true
                         }
-
                     },
                     success: function() {
                         var xFlag = $('#btnGrabar').html() == 'Guardar' ? '1' : '2';
-                        xajax__InterfazProductoMantenimiento(xFlag, xajax.getFormValues('formproducto', true));
+                        xajax__InterfazMesasMantenimiento(xFlag, xajax.getFormValues('formmesa', true));
                     }
                 });
             });
@@ -381,17 +372,17 @@ function _InterfazProductoFormulario($producto = ''){
         ");
 
     }else{
-        $rpta->addAlert("producto no existe");
+        $rpta->addAlert("mesa no existe");
     }
 
     return $rpta;
 }
 
-function _InterfazProductoMantenimiento($xFlag, $xForm){
+function _InterfazMesasMantenimiento($xFlag, $xForm){
 
     $rpta = new xajaxResponse();
 
-    $objR = new MenProducto();
+    $objR = new MenMesas();
     $resul = $objR->mantenimientoData($xFlag, $xForm);
 
     if($resul == "0"){
@@ -400,7 +391,7 @@ function _InterfazProductoMantenimiento($xFlag, $xForm){
 
         $rpta->addAlert(constant($resul));
         $rpta->addScript("
-            xajax__InterfazProductoListado();
+            xajax__InterfazMesasListado();
                 $('#modal-default').modal('hide');
        ");
 
@@ -410,9 +401,9 @@ function _InterfazProductoMantenimiento($xFlag, $xForm){
 }
 
 
-$xajax->registerFunction("_InterfazProductoPrincipal");
-$xajax->registerFunction("_InterfazProductoListado");
-$xajax->registerFunction("_InterfazProductoFormulario");
-$xajax->registerFunction("_InterfazProductoMantenimiento");
+$xajax->registerFunction("_InterfazMesasPrincipal");
+$xajax->registerFunction("_InterfazMesasListado");
+$xajax->registerFunction("_InterfazMesasFormulario");
+$xajax->registerFunction("_InterfazMesasMantenimiento");
 
 ?>

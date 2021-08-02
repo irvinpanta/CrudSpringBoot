@@ -1,9 +1,10 @@
 <?php 
 
 	require_once('class/mensaje.class.php');
-	define('API_RUTA_PRODUCTO', '/api/producto/');
 
-	class MenProducto extends mensaje
+	define('API_RUTA_EMPLEADO', '/api/empleado/');
+
+	class MenEmpleado extends mensaje
 	{
 		
 		function consultar($xFlag, $id = '') {
@@ -11,9 +12,9 @@
 			$curl = curl_init();
 
 			if ($xFlag == 1){
-				$url = APP_URL_API . API_RUTA_PRODUCTO . "listar";
+				$url = APP_URL_API . API_RUTA_EMPLEADO . "listar";
 			}elseif ($xFlag == 2){
-				$url = APP_URL_API . API_RUTA_PRODUCTO . "listar/{$id}";
+				$url = APP_URL_API. API_RUTA_EMPLEADO . "listar/{$id}";
 			}
 
 			curl_setopt_array($curl, [
@@ -40,22 +41,23 @@
 		{	
 
 			$xId = "";
-			$xDescripcion = "";
-			$xStock = 0;
-			$xPrecio = 0;
+			$xNumeroDocumento = "";
+			$xNombres = "";
+			$xApellidos = "";
+			$xDireccion = "";
+			$xTelefono = "";
 			$xActivo = 0;
-
-			$xTipoPro = 0;
-			$xFamPro = 0;
+			$xRol = 0;
 
 			if ($xFlag == "1" || $xFlag == "2") {
 
 				$xId = $xForm["id"];
-				$xDescripcion = $xForm["txt_descripcion"];
-				$xStock = $xForm["txt_stock"];
-				$xPrecio = $xForm["txt_precio"];
-				$xTipoPro = $xForm["lst_tipoproducto"];
-				$xFamPro = $xForm["lst_famproducto"];
+				$xNumeroDocumento = $xForm["txt_dni"];
+				$xNombres = $xForm["txt_nombres"];
+				$xApellidos = $xForm["txt_apellidos"];
+				$xDireccion = $xForm["txt_direccion"];
+				$xTelefono = $xForm["txt_telefono"];
+				$xRol = $xForm["lst_rol"];
 				$xActivo = isset($xForm["chk_activo"]) ? 1 : 0;
 
 			}elseif ($xFlag == "3"){
@@ -63,13 +65,13 @@
 			}
 
 			if ($xFlag == "1"){
-				$url = APP_URL_API . API_RUTA_PRODUCTO . "save";
+				$url = APP_URL_API . API_RUTA_EMPLEADO . "save";
 				$metodo = "POST";
 			}elseif ($xFlag == "2"){
-				$url = APP_URL_API . API_RUTA_PRODUCTO . "update/{$xId}";
+				$url = APP_URL_API . API_RUTA_EMPLEADO . "update/{$xId}";
 				$metodo = "PUT";
 			}elseif ($xFlag == "3"){
-				$url = APP_URL_API . API_RUTA_PRODUCTO . "delete/{$xId}";
+				$url = APP_URL_API . API_RUTA_EMPLEADO . "delete/{$xId}";
 				$metodo = "DELETE";
 			}
 
@@ -80,17 +82,16 @@
 			  CURLOPT_URL => $url,
 			  CURLOPT_RETURNTRANSFER => true,
 			  CURLOPT_CUSTOMREQUEST => $metodo,
-			  CURLOPT_POSTFIELDS => "  {
-			  	\n    \"descripcion\": \"{$xDescripcion}\",
-			  	\n    \"stock\": {$xStock},
-			  	\n    \"precio\": {$xPrecio},
-			  	\n    \"activo\": {$xActivo},
-			  	\n    \"famproducto\": {
-			  						\n      \"id\": {$xFamPro}
-			  						\n  },
-			  	\n    \"tipoProducto\": {
-			  						\n      \"tipoProducto\": {$xTipoPro}
-			  						\n  }\n  }",
+			 CURLOPT_POSTFIELDS => "  {
+			 	\n    \"numerodocumento\": \"{$xNumeroDocumento}\",
+			 	\n    \"nombres\": \"{$xNombres}\",
+			 	\n    \"apellidos\": \"{$xApellidos}\",
+			 	\n    \"direccion\": \"{$xDireccion}\",
+			 	\n    \"telefono\": \"{$xTelefono}\",
+			 	\n    \"activo\": {$xActivo},
+			 	\n    \"rol\": {
+			 					\n      \"rol\": {$xRol}
+			 					\n    }\n  }",
 			  CURLOPT_HTTPHEADER => [
 			    "Content-Type: application/json"
 			  ],

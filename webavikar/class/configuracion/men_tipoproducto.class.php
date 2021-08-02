@@ -1,6 +1,7 @@
 <?php 
 
 	require_once('class/mensaje.class.php');
+	define('API_RUTA_TIPOPRODUCTO', '/api/tipoproducto/');
 
 	class MenTipoProducto extends mensaje
 	{
@@ -10,9 +11,9 @@
 			$curl = curl_init();
 
 			if ($xFlag == 1){
-				$url = "http://localhost:8080/api/tipoproducto/listar";
+				$url = APP_URL_API . API_RUTA_TIPOPRODUCTO . "listar";
 			}elseif ($xFlag == 2){
-				$url = "http://localhost:8080/api/tipoproducto/listar/{$id}";
+				$url = APP_URL_API . API_RUTA_TIPOPRODUCTO . "listar/{$id}";
 			}
 
 			curl_setopt_array($curl, [
@@ -53,13 +54,13 @@
 			}
 
 			if ($xFlag == "1"){
-				$url = "http://localhost:8080/api/tipoproducto/save";
+				$url = APP_URL_API . API_RUTA_TIPOPRODUCTO . "save";
 				$metodo = "POST";
 			}elseif ($xFlag == "2"){
-				$url = "http://localhost:8080/api/tipoproducto/update/{$xId}";
+				$url = APP_URL_API . API_RUTA_TIPOPRODUCTO . "update/{$xId}";
 				$metodo = "PUT";
 			}elseif ($xFlag == "3"){
-				$url = "http://localhost:8080/api/tipoproducto/delete/{$xId}";
+				$url = APP_URL_API . API_RUTA_TIPOPRODUCTO . "delete/{$xId}";
 				$metodo = "DELETE";
 			}
 

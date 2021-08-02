@@ -285,7 +285,8 @@ function _InterfazSalonesFormulario($salon = ''){
                             required: true
                         },
                         txt_capacidad_salon: {
-                            required: true
+                            required: true,
+                            number: true
                         }
                     },
                     success: function() {

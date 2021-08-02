@@ -1,6 +1,7 @@
 <?php 
 
 	require_once('class/mensaje.class.php');
+	define('API_RUTA_SALON', '/api/salones/');
 
 	class MenSalon extends mensaje
 	{
@@ -10,9 +11,9 @@
 			$curl = curl_init();
 
 			if ($xFlag == 1){
-				$url = "http://localhost:8080/api/salones/listar";
+				$url = APP_URL_API . API_RUTA_SALON . "listar";
 			}elseif ($xFlag == 2){
-				$url = "http://localhost:8080/api/salones/listar/{$rol}";
+				$url = APP_URL_API . API_RUTA_SALON . "listar/{$rol}";
 			}
 
 			curl_setopt_array($curl, [
@@ -55,13 +56,13 @@
 			}
 
 			if ($xFlag == "1"){
-				$url = "http://localhost:8080/api/salones/save";
+				$url = APP_URL_API . API_RUTA_SALON . "save";
 				$metodo = "POST";
 			}elseif ($xFlag == "2"){
-				$url = "http://localhost:8080/api/salones/update/{$xSalon}";
+				$url = APP_URL_API . API_RUTA_SALON . "update/{$xSalon}";
 				$metodo = "PUT";
 			}elseif ($xFlag == "3"){
-				$url = "http://localhost:8080/api/salones/delete/{$xSalon}";
+				$url = APP_URL_API . API_RUTA_SALON . "delete/{$xSalon}";
 				$metodo = "DELETE";
 			}
 

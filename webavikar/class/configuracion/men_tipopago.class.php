@@ -1,6 +1,7 @@
 <?php 
 
 	require_once('class/mensaje.class.php');
+	define('API_RUTA_TIPOPAGO', '/api/tipopago/');
 
 	class MenTipoP extends mensaje
 	{
@@ -10,9 +11,9 @@
 			$curl = curl_init();
 
 			if ($xFlag == 1){
-				$url = "http://localhost:8080/api/tipopago/listar";
+				$url = APP_URL_API . API_RUTA_TIPOPAGO . "listar";
 			}elseif ($xFlag == 2){
-				$url = "http://localhost:8080/api/tipopago/listar/{$id}";
+				$url = APP_URL_API . API_RUTA_TIPOPAGO . "listar/{$id}";
 			}
 
 			curl_setopt_array($curl, [
@@ -57,13 +58,13 @@
 			}
 
 			if ($xFlag == "1"){
-				$url = "http://localhost:8080/api/tipopago/save";
+				$url = APP_URL_API . API_RUTA_TIPOPAGO . "save";
 				$metodo = "POST";
 			}elseif ($xFlag == "2"){
-				$url = "http://localhost:8080/api/tipopago/update/{$xTipoP}";
+				$url = APP_URL_API . API_RUTA_TIPOPAGO . "update/{$xTipoP}";
 				$metodo = "PUT";
 			}elseif ($xFlag == "3"){
-				$url = "http://localhost:8080/api/tipopago/delete/{$xTipoP}";
+				$url = APP_URL_API . API_RUTA_TIPOPAGO . "delete/{$xTipoP}";
 				$metodo = "DELETE";
 			}
 

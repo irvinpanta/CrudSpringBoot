@@ -20,6 +20,8 @@
   include_once('modulos/configuracion/interfazCaja.php');
   include_once('modulos/configuracion/interfazFamProducto.php');
   include_once('modulos/configuracion/interfazProducto.php');
+  include_once('modulos/configuracion/interfazMesas.php');
+  include_once('modulos/configuracion/interfazEmpleado.php');
 
   $xajax->processRequests();
 
@@ -158,8 +160,10 @@
             </span>
           </a>
           <ul class="treeview-menu">
+            <li><a href="javascript: xajax__InterfazEmpleadoPrincipal()"><i class="fa fa-caret-right"></i>  Empleado</a></li>
             <li><a href="javascript: xajax__interfazRolesPrincipal()"><i class="fa fa-caret-right"></i>  Roles</a></li>
             <li><a href="javascript: xajax__InterfazSalonesPrincipal()"><i class="fa fa-caret-right"></i>  Salones</a>
+              <li><a href="javascript: xajax__InterfazMesasPrincipal()"><i class="fa fa-caret-right"></i>  Mesas</a>
             <li><a href="javascript: xajax__InterfazTipoOperacionPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Operacion</a>
             <li><a href="javascript: xajax__InterfazTipoPagoPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Pago</a>
             <li><a href="javascript: xajax__InterfazCajaPrincipal()"><i class="fa fa-caret-right"></i>  Caja</a></li>
