@@ -23,6 +23,11 @@
   include_once('modulos/configuracion/interfazMesas.php');
   include_once('modulos/configuracion/interfazEmpleado.php');
 
+  include_once('modulos/configuracion/interfazClientes.php');
+  include_once('modulos/configuracion/interfazArea.php');
+
+  include_once('modulos/configuracion/interfazGrupoDespacho.php');
+
   $xajax->processRequests();
 
 ?>
@@ -46,9 +51,11 @@
   <link rel="stylesheet" href="<?php echo APP_DIR_COMPONENTES ?>/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="<?php echo APP_DIR_CSS ?>/css/AdminLTE.css">
   <link rel="stylesheet" href="<?php echo APP_DIR_CSS ?>/css/skin-blue.css">
-  <link rel="stylesheet" href="<?php echo APP_DIR_COMPONENTES ?>/select2/dist/css/select2.css">
+  <!--<link rel="stylesheet" href="<?php echo APP_DIR_COMPONENTES ?>/select2/dist/css/select2.css">-->
   <link rel="stylesheet" href="<?php echo APP_DIR_COMPONENTES ?>/sweetalert2/sweetalert2.css">
-  <link rel="stylesheet" href="<?php echo APP_DIR_COMPONENTES ?>/datatables.net-bs/css/dataTables.bootstrap.css">
+  <link rel="stylesheet" href="<?php echo APP_DIR_COMPONENTES ?>/datatables.net-bs/css/dataTables.bootstrap.css">  
+
+
 
   <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
 
@@ -160,13 +167,12 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="javascript: xajax__InterfazEmpleadoPrincipal()"><i class="fa fa-caret-right"></i>  Empleado</a></li>
-            <li><a href="javascript: xajax__interfazRolesPrincipal()"><i class="fa fa-caret-right"></i>  Roles</a></li>
-            <li><a href="javascript: xajax__InterfazSalonesPrincipal()"><i class="fa fa-caret-right"></i>  Salones</a>
-              <li><a href="javascript: xajax__InterfazMesasPrincipal()"><i class="fa fa-caret-right"></i>  Mesas</a>
-            <li><a href="javascript: xajax__InterfazTipoOperacionPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Operacion</a>
-            <li><a href="javascript: xajax__InterfazTipoPagoPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Pago</a>
+            <li><a href="javascript: xajax__InterfazSalonesPrincipal()"><i class="fa fa-caret-right"></i>  Salones</a></li>
+            <li><a href="javascript: xajax__InterfazMesasPrincipal()"><i class="fa fa-caret-right"></i>  Mesas</a></li>
+            <li><a href="javascript: xajax__InterfazTipoOperacionPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Operacion</a></li>
+            <li><a href="javascript: xajax__InterfazTipoPagoPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Pago</a></li>
             <li><a href="javascript: xajax__InterfazCajaPrincipal()"><i class="fa fa-caret-right"></i>  Caja</a></li>
+            <li><a href="javascript: xajax__InterfazClientesPrincipal()"><i class="fa fa-caret-right"></i>  Clientes</a></li>
           </ul>  
         </li>
 
@@ -181,7 +187,33 @@
             <li><a href="javascript: xajax__InterfazProductoPrincipal()"><i class="fa fa-caret-right"></i>  Producto</a></li>
             <li><a href="javascript: xajax__InterfazFamProductoPrincipal()"><i class="fa fa-caret-right"></i>  Fam. Producto</a></li>
             <li><a href="javascript: xajax__InterfazTipoProductoPrincipal()"><i class="fa fa-caret-right"></i>  Tipo de Producto</a></li>
+            <li><a href="javascript: xajax__InterfazAreaPrincipal()"><i class="fa fa-caret-right"></i>  Area</a></li>
+            <li><a href="javascript: xajax__InterfazGrupoDespachoPrincipal()"><i class="fa fa-caret-right"></i>  Grupo despacho</a></li>
           </ul>  
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Personal</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="javascript: xajax__InterfazEmpleadoPrincipal()"><i class="fa fa-caret-right"></i>  Empleado</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>Seguridad</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="javascript: xajax__interfazRolesPrincipal()"><i class="fa fa-caret-right"></i>  Roles</a></li>
+          </ul>
         </li>
 
       </ul>
@@ -192,8 +224,8 @@
 
     <section class="content">
 
-      <div class="box">
-        <div class="box-body">
+      <!--<div class="box">
+        <div class="box-body">-->
 
           <div id="container-fluid"> <!--Contenedor-->
 
@@ -225,8 +257,8 @@
 
           
 
-        </div>
-      </div>
+        <!--</div>
+      </div>-->
   
     </section>
     
@@ -247,10 +279,13 @@
 ?>
 
 <script src="<?php echo APP_DIR_CSS ?>/js/jquery.min.js"></script>
+<!--<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
 <script src="<?php echo APP_DIR_CSS ?>/js/bootstrap.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
 <script src="<?php echo APP_DIR_CSS ?>/js/adminlte.min.js"></script>
-<script src="<?php echo APP_DIR_COMPONENTES ?>/select2/dist/js/select2.full.min.js"></script>
-<script src="<?php echo APP_DIR_COMPONENTES ?>/sweetalert2/sweetalert2.all.js"></script>
+<!--<script src="<?php //echo APP_DIR_COMPONENTES ?>/select2/dist/js/select2.full.min.js"></script>-->
+<!--<script src="<?php //echo APP_DIR_COMPONENTES ?>/sweetalert2/sweetalert2.all.js"></script>-->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 <script src="<?php echo APP_DIR_COMPONENTES ?>/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo APP_DIR_COMPONENTES ?>/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
