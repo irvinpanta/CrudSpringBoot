@@ -12,9 +12,9 @@
 			$curl = curl_init();
 
 			if ($xFlag == 1){
-				$url = APP_URL_API . API_RUTA_AREA . "listar";
+				$url = APP_URL_API_PRO . API_RUTA_AREA . "listar";
 			}elseif ($xFlag == 2){
-				$url = APP_URL_API . API_RUTA_AREA . "listar/{$id}";
+				$url = APP_URL_API_PRO . API_RUTA_AREA . "listar/{$id}";
 			}
 
 			curl_setopt_array($curl, [
@@ -55,13 +55,13 @@
 			}
 
 			if ($xFlag == "1"){
-				$url = APP_URL_API . API_RUTA_AREA . "save";
+				$url = APP_URL_API_PRO . API_RUTA_AREA . "save";
 				$metodo = "POST";
 			}elseif ($xFlag == "2"){
-				$url = APP_URL_API . API_RUTA_AREA . "update/{$xId}";
+				$url = APP_URL_API_PRO . API_RUTA_AREA . "update/{$xId}";
 				$metodo = "PUT";
 			}elseif ($xFlag == "3"){
-				$url = APP_URL_API . API_RUTA_AREA . "delete/{$xId}";
+				$url = APP_URL_API_PRO . API_RUTA_AREA . "delete/{$xId}";
 				$metodo = "DELETE";
 			}
 
