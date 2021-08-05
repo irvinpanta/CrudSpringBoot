@@ -1,10 +1,14 @@
 package com.softpang.apiavikarproductos.Entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "tipoproducto")
+@Data @NoArgsConstructor
 public class TipoProductoEntity {
 
     @Id
@@ -20,40 +24,9 @@ public class TipoProductoEntity {
     @Temporal(TemporalType.DATE)
     private Date fechaSistema;
 
-    public TipoProductoEntity() {
-    }
-
     public TipoProductoEntity(String descripcion, Integer activo) {
         this.descripcion = descripcion;
         this.activo = activo;
-    }
-
-    public Integer getTipoProducto() {
-        return tipoProducto;
-    }
-
-    public void setTipoProducto(Integer tipoProducto) {
-        this.tipoProducto = tipoProducto;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Integer getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Integer activo) {
-        this.activo = activo;
-    }
-
-    public Date getFechaSistema() {
-        return fechaSistema;
     }
 
     @PrePersist

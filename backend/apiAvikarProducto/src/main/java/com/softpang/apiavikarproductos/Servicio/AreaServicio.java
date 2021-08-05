@@ -22,19 +22,17 @@ public class AreaServicio {
         return areaRepo.findById(id);
     }
 
-    public Optional<AreaEntity> buscarPorDescripcion(String descripcion){
-        return areaRepo.findByDescripcion(descripcion);
-    }
+    public Optional<AreaEntity> buscarPorDescripcion(String descripcion){ return areaRepo.findByDescripcion(descripcion); }
 
     public void mantenimientoData(AreaEntity entity){
         areaRepo.save(entity);
     }
 
-    public void delete(int id){
+    public void delete(Integer id){
         areaRepo.deleteById(id);
     }
 
-    public boolean existsById(int id){
+    public boolean existsById(Integer id){
         return areaRepo.existsById(id);
     }
 

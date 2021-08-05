@@ -13,6 +13,7 @@ public class ProductoModelDto {
     private Double precio;
     private Integer activo;
 
+
     private FamProductoEntity famproducto;
     private TipoProductoEntity tipoProducto;
 }

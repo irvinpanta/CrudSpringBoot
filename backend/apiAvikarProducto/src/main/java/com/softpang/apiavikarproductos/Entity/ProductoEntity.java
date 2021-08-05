@@ -1,10 +1,14 @@
 package com.softpang.apiavikarproductos.Entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name="productos")
+@Data @NoArgsConstructor
 public class ProductoEntity {
 
     @Id
@@ -33,9 +37,6 @@ public class ProductoEntity {
     @Temporal(TemporalType.DATE)
     private Date fecSistema;
 
-    public ProductoEntity() {
-    }
-
     public ProductoEntity(String descripcion, Integer stock, Double precio, Integer activo, FamProductoEntity famproducto, TipoProductoEntity tipoProducto) {
         this.descripcion = descripcion;
         this.stock = stock;
@@ -43,66 +44,6 @@ public class ProductoEntity {
         this.activo = activo;
         this.famproducto = famproducto;
         this.tipoProducto = tipoProducto;
-    }
-
-    public Integer getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Integer producto) {
-        this.producto = producto;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public Double getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
-
-    public Integer getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Integer activo) {
-        this.activo = activo;
-    }
-
-    public FamProductoEntity getFamproducto() {
-        return famproducto;
-    }
-
-    public void setFamproducto(FamProductoEntity famproducto) {
-        this.famproducto = famproducto;
-    }
-
-    public TipoProductoEntity getTipoProducto() {
-        return tipoProducto;
-    }
-
-    public void setTipoProducto(TipoProductoEntity tipoProducto) {
-        this.tipoProducto = tipoProducto;
-    }
-
-    public Date getFecSistema() {
-        return fecSistema;
     }
 
     @PrePersist

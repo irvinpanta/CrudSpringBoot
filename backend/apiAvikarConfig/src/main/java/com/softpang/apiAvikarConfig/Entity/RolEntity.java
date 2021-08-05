@@ -1,4 +1,4 @@
-package com.softpang.apiavikarproductos.Entity;
+package com.softpang.apiAvikarConfig.Entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -6,24 +6,28 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "areas")
+@Table(name = "roles")
 @Data @NoArgsConstructor
-public class AreaEntity {
+public class RolEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer area;
+    private Integer rol;
 
     @Column(length = 50, unique = true, nullable = false)
     private String descripcion;
 
     @Column(length = 1)
+    private Integer orden;
+
+    @Column(length = 1)
     private Integer activo;
 
-    public AreaEntity(String descripcion, Integer activo) {
+
+    public RolEntity(String descripcion, Integer orden, Integer activo) {
         this.descripcion = descripcion;
+        this.orden = orden;
         this.activo = activo;
     }
-
 
 }

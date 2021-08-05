@@ -20,6 +20,9 @@ public class TipoProductoControlador {
     @Autowired
     private TipoProductoServicio tipoProductoServicio;
 
+    private String message = "";
+    private HttpStatus status;
+
     @GetMapping("/listar")
     public ResponseEntity<TipoProductoEntity> listarAll(){
         ArrayList<TipoProductoEntity> lista = tipoProductoServicio.listarAll();
@@ -27,59 +30,74 @@ public class TipoProductoControlador {
     }
 
     @GetMapping("/listar/{id}")
-    public ResponseEntity<TipoProductoEntity> buscarPorId(@PathVariable("id") int id){
-        if (!tipoProductoServicio.existsById(id))
-            return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
-        TipoProductoEntity tipoProductoEntity = tipoProductoServicio.buscarPorId(id).get();
-        return new ResponseEntity(tipoProductoEntity, HttpStatus.OK);
-    }
+    public ResponseEntity<TipoProductoEntity> buscarPorId(@PathVariable("id") Integer id){
 
-    @GetMapping("/listar/query/{descripcion}")
-    public ResponseEntity<TipoProductoEntity> buscarPorDescripcion(@PathVariable("descripcion") String descripcion){
-        if (!tipoProductoServicio.existsByDescripcion(descripcion))
+        if (!tipoProductoServicio.existsById(id)){
             return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
-        Optional<TipoProductoEntity> tipoProductoEntity = tipoProductoServicio.buscarPorDescripcion(descripcion);
-        return new ResponseEntity(tipoProductoEntity, HttpStatus.OK);
+
+        }else{
+            TipoProductoEntity tipoProductoEntity = tipoProductoServicio.buscarPorId(id).get();
+            return new ResponseEntity(tipoProductoEntity, HttpStatus.OK);
+
+        }
     }
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody TipoProductoModelDto tipoProDto){
 
-        if(tipoProductoServicio.existsByDescripcion(tipoProDto.getDescripcion()))
-            return new ResponseEntity("MSG_0005", HttpStatus.NOT_FOUND);
-        if (tipoProDto.getDescripcion() == "")
-            return new ResponseEntity("MSG_0040", HttpStatus.NOT_FOUND);
+        if(tipoProductoServicio.existsByDescripcion(tipoProDto.getDescripcion())){
+            message = "MSG_0005"; status = HttpStatus.NOT_FOUND;
 
-        TipoProductoEntity entity = new TipoProductoEntity(tipoProDto.getDescripcion(), tipoProDto.getActivo());
-        tipoProductoServicio.mantenimientoData(entity);
-        return new ResponseEntity("MSG_0001", HttpStatus.OK);
+        }else if (tipoProDto.getDescripcion() == ""){
+            message = "MSG_0040"; status = HttpStatus.BAD_REQUEST;
+
+        }else{
+            TipoProductoEntity entity = new TipoProductoEntity(
+                                                        tipoProDto.getDescripcion(),
+                                                        tipoProDto.getActivo());
+            tipoProductoServicio.mantenimientoData(entity);
+            message = "MSG_0001"; status = HttpStatus.OK;
+        }
+        return new ResponseEntity(message, status);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody TipoProductoModelDto tipoProDto){
+    public ResponseEntity<?> update(@PathVariable("id") Integer id, @RequestBody TipoProductoModelDto tipoProDto){
 
-        if(!tipoProductoServicio.existsById(id))
-            return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
-        if(tipoProDto.getDescripcion() == "")
-            return new ResponseEntity("MSG_0040", HttpStatus.NOT_FOUND);
-        if (tipoProductoServicio.existsByDescripcion(tipoProDto.getDescripcion()) && tipoProductoServicio.buscarPorDescripcion(tipoProDto.getDescripcion()).get().getTipoProducto() != id)
-            return new ResponseEntity("MSG_0005", HttpStatus.NOT_FOUND);
+        if(!tipoProductoServicio.existsById(id)){
+            message = "MSG_0006"; status = HttpStatus.NOT_FOUND;
 
-        TipoProductoEntity entity = tipoProductoServicio.buscarPorId(id).get();
-        entity.setDescripcion(tipoProDto.getDescripcion());
-        entity.setActivo(tipoProDto.getActivo());
-        tipoProductoServicio.mantenimientoData(entity);
-        return new ResponseEntity("MSG_0002", HttpStatus.OK);
+        }else if(tipoProDto.getDescripcion() == ""){
+            message = "MSG_0040"; status = HttpStatus.BAD_REQUEST;
+
+        }else if (tipoProductoServicio.existsByDescripcion(tipoProDto.getDescripcion()) && tipoProductoServicio.buscarPorDescripcion(tipoProDto.getDescripcion()).get().getTipoProducto() != id){
+            message = "MSG_0005"; status = HttpStatus.BAD_REQUEST;
+
+        }else{
+
+            TipoProductoEntity entity = tipoProductoServicio.buscarPorId(id).get();
+            entity.setDescripcion(tipoProDto.getDescripcion());
+            entity.setActivo(tipoProDto.getActivo());
+            tipoProductoServicio.mantenimientoData(entity);
+
+            message = "MSG_0002"; status = HttpStatus.OK;
+        }
+        return new ResponseEntity(message, status);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") int id){
+    public ResponseEntity<?> delete(@PathVariable("id") Integer id){
 
         try {
-            if (!tipoProductoServicio.existsById(id))
-                return new ResponseEntity("MSG_0006", HttpStatus.NOT_FOUND);
-            tipoProductoServicio.delete(id);
-            return new ResponseEntity("MSG_0003", HttpStatus.OK);
+            if (!tipoProductoServicio.existsById(id)){
+                message = "MSG_0006"; status = HttpStatus.NOT_FOUND;
+
+            }else{
+                tipoProductoServicio.delete(id);
+                message = "MSG_0003"; status = HttpStatus.OK;
+            }
+            return new ResponseEntity(message, status);
+
         }catch (Exception ex){
             return new ResponseEntity("MSG_0030", HttpStatus.CONFLICT);
         }

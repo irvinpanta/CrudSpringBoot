@@ -1,7 +1,7 @@
-package com.softpang.apiAvikarMantenimiento.Servicio;
+package com.softpang.apiAvikarConfig.Servicio;
 
-import com.softpang.apiAvikarMantenimiento.Entity.RolEntity;
-import com.softpang.apiAvikarMantenimiento.Repositorio.RolRepositorio;
+import com.softpang.apiAvikarConfig.Entity.RolEntity;
+import com.softpang.apiAvikarConfig.Repositorio.RolRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class RolServicio {
     public ArrayList<RolEntity> listar(){
         return (ArrayList<RolEntity>) rolRepo.findAll();
     }
-    public Optional<RolEntity> obtenerPorId(Long rol){ return rolRepo.findById(rol); }
+    public Optional<RolEntity> obtenerPorId(Integer rol){ return rolRepo.findById(rol); }
     public Optional<RolEntity> obtenerByDescripcion(String descripcion){
         return rolRepo.findByDescripcion(descripcion);
     }
@@ -26,11 +26,11 @@ public class RolServicio {
         rolRepo.save(rol);
     }
 
-    public void delete(Long rol){
+    public void delete(Integer rol){
         rolRepo.deleteById(rol);
     }
 
-    public boolean existePorId(Long rol){
+    public boolean existePorId(Integer rol){
         return rolRepo.existsById(rol);
     }
     public boolean existePorDescripcion(String descripcion){

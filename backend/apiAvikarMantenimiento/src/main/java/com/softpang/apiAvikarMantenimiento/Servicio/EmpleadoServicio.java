@@ -30,11 +30,11 @@ public class EmpleadoServicio {
         empleadoRepo.save(empleado);
     }
 
-    public void delete(int id){
+    public void delete(Integer id){
         empleadoRepo.deleteById(id);
     }
 
-    public boolean existsById(int id){
+    public boolean existsById(Integer id){
         return empleadoRepo.existsById(id);
     }
 

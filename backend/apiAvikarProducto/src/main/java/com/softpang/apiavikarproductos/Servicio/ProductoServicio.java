@@ -18,7 +18,7 @@ public class ProductoServicio {
         return (ArrayList<ProductoEntity>) productoRepo.findAll();
     }
 
-    public Optional<ProductoEntity> buscarPorId(int id){
+    public Optional<ProductoEntity> buscarPorId(Integer id){
         return productoRepo.findById(id);
     }
     public Optional<ProductoEntity> buscarPorDescripcion(String descripcion){
@@ -28,10 +28,10 @@ public class ProductoServicio {
     public void mantenimientoData(ProductoEntity productoEntity){
         productoRepo.save(productoEntity);
     }
-    public void delete(int id){
+    public void delete(Integer id){
         productoRepo.deleteById(id);
     }
-    public boolean existsById(int id){
+    public boolean existsById(Integer id){
         return productoRepo.existsById(id);
     }
     public boolean existsByDescripcion(String descripcion){
