@@ -12,21 +12,22 @@
   $xajax->setCharEncoding('utf-8');
 
 
-  include_once('modulos/configuracion/interfazRoles.php');
+  include_once('modulos/config/interfazRoles.php');
+
   include_once('modulos/configuracion/interfazSalones.php');
   include_once('modulos/configuracion/interfazTipoOperacion.php');
   include_once('modulos/configuracion/interfazTipoPago.php');
-  include_once('modulos/configuracion/interfazTipoProducto.php');
   include_once('modulos/configuracion/interfazCaja.php');
-  include_once('modulos/configuracion/interfazFamProducto.php');
-  include_once('modulos/configuracion/interfazProducto.php');
   include_once('modulos/configuracion/interfazMesas.php');
   include_once('modulos/configuracion/interfazEmpleado.php');
-
   include_once('modulos/configuracion/interfazClientes.php');
-  include_once('modulos/configuracion/interfazArea.php');
-
-  include_once('modulos/configuracion/interfazGrupoDespacho.php');
+  
+  
+  include_once('modulos/productos/interfazFamProducto.php');
+  include_once('modulos/productos/interfazProducto.php');
+  include_once('modulos/productos/interfazTipoProducto.php');
+  include_once('modulos/productos/interfazArea.php');
+  include_once('modulos/productos/interfazGrupoDespacho.php');
 
   $xajax->processRequests();
 

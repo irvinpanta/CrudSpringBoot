@@ -1,6 +1,6 @@
 <?php 
 
-require_once(APP_DIR_CLASS . 'configuracion/men_area.class.php');
+require_once(APP_DIR_CLASS . 'productos/men_area.class.php');
 
 class InterfazArea
 {
@@ -144,12 +144,15 @@ class InterfazArea
             <div class="modal-dialog">
                 <div class="modal-content">
 
-                    <div class="modal-header">
-                        <h4 id="formTitle01">Configuración de Areas</h4>
-                    </div>  
+                    <div class="box modal-header">
+                        <div class="with-border">
+                            <h4 id="formTitle01">Configuración de Areas</h4>
+                        </div>
+                    </div>
 
                     <div class="modal-body">
                         <form id="formarea" name="formarea" onSubmit="return false" onkeypress="if(gKeyEnter(event)) return false;">
+
 
                             <div class="well-login">
         
@@ -165,7 +168,6 @@ class InterfazArea
                                         <input type="checkbox" id="chk_activo" name="chk_activo" value="1" checked>Activo.
                                     </label>
                                 </div>
-
                                 
                             </div>
 
@@ -241,59 +243,67 @@ function _InterfazAreaFormulario($area = ''){
     $resultado = json_decode($response, true);
 
 
-    if ($response !== "MSG_0006"){
-    
-        if ($area == ""){
+    if($response != "1"){
 
-            $rpta->addAssign("formTitle01",'innerHTML',"Nuevo area");
-            $rpta->addAssign("btnGrabar",'innerHTML',"Guardar");
+        if ($response != "MSG_0006"){
 
-        }else{
 
-            $rpta->addAssign("formTitle01",'innerHTML',"Editar area");
-            $rpta->addAssign("btnGrabar",'innerHTML',"Actualizar");
+        
+            if ($area == ""){
 
-       
-            $rpta->addAssign("txt_descripcion","value",$resultado["descripcion"]);
-
-            if ($resultado["activo"] == 1) {
-                
-                $rpta->addScript("
-                    $('#chk_activo').prop('checked',true);
-                ");
+                $rpta->addAssign("formTitle01",'innerHTML',"Nuevo area");
+                $rpta->addAssign("btnGrabar",'innerHTML',"Guardar");
 
             }else{
 
-                $rpta->addScript("
-                    $('#chk_activo').prop('checked',false);
-                ");
+                $rpta->addAssign("formTitle01",'innerHTML',"Editar area");
+                $rpta->addAssign("btnGrabar",'innerHTML',"Actualizar");
+
+           
+                $rpta->addAssign("txt_descripcion","value",$resultado["descripcion"]);
+
+                if ($resultado["activo"] == 1) {
+                    
+                    $rpta->addScript("
+                        $('#chk_activo').prop('checked',true);
+                    ");
+
+                }else{
+
+                    $rpta->addScript("
+                        $('#chk_activo').prop('checked',false);
+                    ");
+                }
+
             }
 
+            $rpta->addScript("
+            
+                $('#btnGrabar').unbind('click').click(function(){
+                    validaERP.valida({
+                        form: '#formarea',
+                        items: {
+                            txt_descripcion: {
+                                required: true
+                            }
+                        },
+                        success: function() {
+                            var xFlag = $('#btnGrabar').html() == 'Guardar' ? '1' : '2';
+                            xajax__InterfazAreaMantenimiento(xFlag, xajax.getFormValues('formarea', true));
+                        }
+                    });
+                });
+
+                $('#modal-default').modal('show');
+                $('#txt_descripcion').focus();
+            ");
+
+        }else{
+            $rpta->addAlert(constant($response));
         }
 
-        $rpta->addScript("
-        
-            $('#btnGrabar').unbind('click').click(function(){
-                validaERP.valida({
-                    form: '#formarea',
-                    items: {
-                        txt_descripcion: {
-                            required: true
-                        }
-                    },
-                    success: function() {
-                        var xFlag = $('#btnGrabar').html() == 'Guardar' ? '1' : '2';
-                        xajax__InterfazAreaMantenimiento(xFlag, xajax.getFormValues('formarea', true));
-                    }
-                });
-            });
-
-            $('#modal-default').modal('show');
-            $('#txt_descripcion').focus();
-        ");
-
     }else{
-        $rpta->addAlert("area no existe");
+        $rpta->addAlert($obj->getMsgErr());
     }
 
     return $rpta;

@@ -19,6 +19,7 @@
 
 	define('APP_URL_API', 'http://localhost:8080');
 	define('APP_URL_API_PRO', 'http://localhost:8081');
+	define('APP_URL_API_CONFIG', 'http://localhost:8082');
 
 
 ?>

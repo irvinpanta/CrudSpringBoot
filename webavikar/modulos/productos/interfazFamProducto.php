@@ -1,13 +1,13 @@
 <?php 
 
-require_once(APP_DIR_CLASS . 'configuracion/men_tipoproducto.class.php');
+require_once(APP_DIR_CLASS . 'productos/men_famproducto.class.php');
 
-class InterfazTipoProducto
+class InterfazFamProducto
 {
     
     function interfazPrincipal(){
 
-        $titulo = 'Configuración Tipo de Producto';
+        $titulo = 'Configuración de Fam. Producto';
 
         $html = '<ul class="breadcrumb">                            
                     <li>
@@ -50,7 +50,7 @@ class InterfazTipoProducto
                                             </tr>
                                         </thead>
 
-                                        <tbody id="td_tipopro">
+                                        <tbody id="td_listado">
                                         '.$this->interfazListado().'
                                         </tbody>
 
@@ -71,7 +71,7 @@ class InterfazTipoProducto
         $html = '';
         $contador = 0;
 
-        $obj = new MenTipoProducto();
+        $obj = new MenFamPro();
         $response = $obj->consultar(1);
         $datos = json_decode($response, true);
 
@@ -98,7 +98,7 @@ class InterfazTipoProducto
                     <td style="text-align: center">
                         <a title = "'.MSG_0010.'" href = javascript:void(0) 
                         onclick="
-                            xajax__InterfazTipoProductoFormulario(\''.$value['tipoProducto'].'\');
+                            xajax__InterfazFamProductoFormulario(\''.$value['id'].'\');
                         "><i class="color-icons icons_editar"></i>
                         </a>                       
                     </td>
@@ -118,7 +118,7 @@ class InterfazTipoProducto
                               confirmButtonText: \'Si, Eliminar registro!\'
                               }).then((result) => {
                                   if (result.isConfirmed) {
-                                      xajax__InterfazTipoProductoMantenimiento(\'3\',\''.$value['tipoProducto'].'\')
+                                      xajax__InterfazFamProductoMantenimiento(\'3\',\''.$value['id'].'\')
                                   }
                             })
 
@@ -126,7 +126,7 @@ class InterfazTipoProducto
                       <i class="color-icons icons_delete"></i>
                       </a>
                     </td>
-                    <td style="text-align: center">'.$value['tipoProducto'].'</td>
+                    <td style="text-align: center">'.$value['id'].'</td>
                     <td style="text-align: ">'.$value['descripcion'].'</td>
                     <td style="text-align: center"><span class="'.$color.'">'.$estado.'</span></td>
                 </tr>';
@@ -136,7 +136,7 @@ class InterfazTipoProducto
         return $html;
     }
 
-    function formulariotipoProducto($tipoProducto=''){
+    function formularioid($id=''){
 
         $html = '
 
@@ -145,15 +145,15 @@ class InterfazTipoProducto
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h4 id="formTitle01">Configuración Tipo de Producto</h4>
+                        <h4 id="formTitle01">Configuración de Fam. Producto</h4>
                     </div>  
 
                     <div class="modal-body">
-                        <form id="formtipoProducto" name="formtipoProducto" onSubmit="return false" onkeypress="if(gKeyEnter(event)) return false;">
+                        <form id="formid" name="formid" onSubmit="return false" onkeypress="if(gKeyEnter(event)) return false;">
 
                             <div class="well-login">
         
-                                <input type="hidden" id="id" name="id" value="'.$tipoProducto.'">
+                                <input type="hidden" id="id" name="id" value="'.$id.'">
 
                                 <div class="form-group">
                                     <label>Descripcion:</label>
@@ -194,11 +194,11 @@ class InterfazTipoProducto
 }
 
 
-function _InterfazTipoProductoPrincipal() {
+function _InterfazFamProductoPrincipal() {
 
     $rpta = new xajaxResponse('UTF-8');
 
-    $objIn = new InterfazTipoProducto();
+    $objIn = new InterfazFamProducto();
     $html = $objIn->interfazPrincipal();
 
     $rpta->addScript('
@@ -210,47 +210,47 @@ function _InterfazTipoProductoPrincipal() {
     $rpta->addAssign("container-fluid", "innerHTML", $html);
     $rpta->addScript("
         $('#btnNuevo').unbind('click').click(function(){
-            xajax__InterfazTipoProductoFormulario();
+            xajax__InterfazFamProductoFormulario();
         });
     ");
 
     return $rpta;
 }
 
-function _InterfazTipoProductoListado() {
+function _InterfazFamProductoListado() {
     
     $rpta = new xajaxResponse('UTF-8');
 
-    $objIn = new InterfazTipoProducto();
+    $objIn = new InterfazFamProducto();
     $rptaHtml = $objIn->interfazListado();
 
-    $rpta->addAssign("td_tipopro", "innerHTML", $rptaHtml);
+    $rpta->addAssign("td_listado", "innerHTML", $rptaHtml);
     
     return $rpta;
 }
 
-function _InterfazTipoProductoFormulario($tipoProducto = ''){
+function _InterfazFamProductoFormulario($id = ''){
 
     $rpta = new xajaxResponse('UTF-8');
 
-    $objIn = new InterfazTipoProducto();
-    $rpta->addAssign("ajaxFormulario", "innerHTML", $objIn->formulariotipoProducto($tipoProducto));
+    $objIn = new InterfazFamProducto();
+    $rpta->addAssign("ajaxFormulario", "innerHTML", $objIn->formularioid($id));
     
-    $obj = new MenTipoProducto();
-    $response = $obj->consultar(2, $tipoProducto);
+    $obj = new MenFamPro();
+    $response = $obj->consultar(2, $id);
     $resultado = json_decode($response, true);
 
 
     if ($response !== "MSG_0006"){
     
-        if ($tipoProducto == ""){
+        if ($id == ""){
 
-            $rpta->addAssign("formTitle01",'innerHTML',"Nuevo Tipo Producto");
+            $rpta->addAssign("formTitle01",'innerHTML',"Nuevo Fam. Producto");
             $rpta->addAssign("btnGrabar",'innerHTML',"Guardar");
 
         }else{
 
-            $rpta->addAssign("formTitle01",'innerHTML',"Editar Tipo Producto");
+            $rpta->addAssign("formTitle01",'innerHTML',"Editar Fam. Producto");
             $rpta->addAssign("btnGrabar",'innerHTML',"Actualizar");
 
        
@@ -275,7 +275,7 @@ function _InterfazTipoProductoFormulario($tipoProducto = ''){
         
             $('#btnGrabar').unbind('click').click(function(){
                 validaERP.valida({
-                    form: '#formtipoProducto',
+                    form: '#formid',
                     items: {
                         txt_descripcion: {
                             required: true
@@ -283,7 +283,7 @@ function _InterfazTipoProductoFormulario($tipoProducto = ''){
                     },
                     success: function() {
                         var xFlag = $('#btnGrabar').html() == 'Guardar' ? '1' : '2';
-                        xajax__InterfazTipoProductoMantenimiento(xFlag, xajax.getFormValues('formtipoProducto', true));
+                        xajax__InterfazFamProductoMantenimiento(xFlag, xajax.getFormValues('formid', true));
                     }
                 });
             });
@@ -293,17 +293,17 @@ function _InterfazTipoProductoFormulario($tipoProducto = ''){
         ");
 
     }else{
-        $rpta->addAlert("Tipo Producto no existe");
+        $rpta->addAlert("id no existe");
     }
 
     return $rpta;
 }
 
-function _InterfazTipoProductoMantenimiento($xFlag, $xForm){
+function _InterfazFamProductoMantenimiento($xFlag, $xForm){
 
     $rpta = new xajaxResponse();
 
-    $objR = new MenTipoProducto();
+    $objR = new MenFamPro();
     $resul = $objR->mantenimientoData($xFlag, $xForm);
 
     if($resul == "0"){
@@ -312,7 +312,7 @@ function _InterfazTipoProductoMantenimiento($xFlag, $xForm){
 
         $rpta->addAlert(constant($resul));
         $rpta->addScript("
-            xajax__InterfazTipoProductoListado();
+            xajax__InterfazFamProductoListado();
                 $('#modal-default').modal('hide');
        ");
 
@@ -322,9 +322,9 @@ function _InterfazTipoProductoMantenimiento($xFlag, $xForm){
 }
 
 
-$xajax->registerFunction("_InterfazTipoProductoPrincipal");
-$xajax->registerFunction("_InterfazTipoProductoListado");
-$xajax->registerFunction("_InterfazTipoProductoFormulario");
-$xajax->registerFunction("_InterfazTipoProductoMantenimiento");
+$xajax->registerFunction("_InterfazFamProductoPrincipal");
+$xajax->registerFunction("_InterfazFamProductoListado");
+$xajax->registerFunction("_InterfazFamProductoFormulario");
+$xajax->registerFunction("_InterfazFamProductoMantenimiento");
 
 ?>
